@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Investigation Intake | English Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #FAF8F5;
+      color: #1E293B;
+    }
+    .serif-text {
+      font-family: 'Newsreader', Georgia, serif;
+    }
+    .mono-text {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    @keyframes gentle-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.45); }
+      50% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(217, 119, 6, 0); }
+    }
+    .pulse-hint {
+      animation: gentle-pulse 2.2s infinite ease-in-out;
+    }
+    @keyframes breathe-circle {
+      0%, 100% { transform: scale(0.85); opacity: 0.7; }
+      50% { transform: scale(1.18); opacity: 1; }
+    }
+    .breathing-circle {
+      animation: breathe-circle 7.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-8 selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- Header Navigation -->
+  <header class="max-w-4xl mx-auto w-full flex items-center justify-between pb-6 border-b border-stone-200/80">
+    <div class="flex items-center space-x-3">
+      <span class="text-2xl p-2 rounded-xl bg-amber-50 border border-amber-200">🔍</span>
+      <div>
+        <h1 class="text-lg md:text-xl font-bold tracking-tight text-stone-900">English Studio // Field Briefing</h1>
+        <p class="text-xs text-stone-500 font-medium">Diagnostic Without Testing • Zero Pressure Entry</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="reset-btn" onclick="resetToChoice()" class="hidden text-xs font-semibold px-3 py-1.5 rounded-lg text-stone-500 hover:text-stone-800 hover:bg-stone-100 transition-all">
+        ← Switch Case
+      </button>
+      <div id="status-badge" class="text-xs font-semibold px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+        Phase 1: Dossier Choice
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Display -->
+  <main class="max-w-4xl mx-auto w-full my-auto py-8">
+
+    <!-- SCREEN 1: CHOICE PORTAL -->
+    <section id="screen-choice" class="space-y-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-stone-900">Choose Your Intake Dossier</h2>
+        <p class="text-stone-600 text-sm md:text-base leading-relaxed">
+          Select the world that interests you most. There are no timers, grades, or trick questions. Spend 8–10 quiet minutes investigating.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+        <!-- Option A -->
+        <button onclick="selectDossier('A')" class="group text-left p-6 rounded-2xl bg-white border border-stone-200 hover:border-emerald-600 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <span class="text-3xl p-2 rounded-xl bg-stone-50 border border-stone-200">📡</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-stone-100 text-stone-700">Cyber Crime</span>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 group-hover:text-emerald-700 mb-2 transition-colors">The 02:14 AM Blackout Log</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mb-4">A corrupted messaging transcript recovered from a rail yard control tower minutes before the power grid went dark.</p>
+          </div>
+          <span class="text-xs font-bold text-emerald-700 group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5">Open Case File →</span>
+        </button>
+
+        <!-- Option B -->
+        <button onclick="selectDossier('B')" class="group text-left p-6 rounded-2xl bg-white border border-stone-200 hover:border-emerald-600 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <span class="text-3xl p-2 rounded-xl bg-stone-50 border border-stone-200">🛰️</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-stone-100 text-stone-700">Sci-Fi Survival</span>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 group-hover:text-emerald-700 mb-2 transition-colors">Sector 4 Signal Intercept</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mb-4">An automated emergency audio beacon from a scout exploring an uncharted subterranean ice fissure.</p>
+          </div>
+          <span class="text-xs font-bold text-emerald-700 group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5">Open Transmission →</span>
+        </button>
+
+        <!-- Option C -->
+        <button onclick="selectDossier('C')" class="group text-left p-6 rounded-2xl bg-white border border-stone-200 hover:border-emerald-600 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <span class="text-3xl p-2 rounded-xl bg-stone-50 border border-stone-200">📜</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-stone-100 text-stone-700">Historical Mystery</span>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 group-hover:text-emerald-700 mb-2 transition-colors">Vault 9: The Steamer Diary</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mb-4">A water-damaged 1912 Atlantic crossing journal hidden in the false back of an antique clock.</p>
+          </div>
+          <span class="text-xs font-bold text-emerald-700 group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5">Open Archive →</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: WORKSPACE (EXTRACT + QUESTION) -->
+    <section id="screen-workspace" class="hidden space-y-6">
+      
+      <!-- Top Info Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
+        <div>
+          <span id="active-genre" class="text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-md">Genre</span>
+          <h2 id="active-title" class="text-xl font-bold text-stone-900 mt-1">Dossier Title</h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="tts-btn" onclick="toggleSpeech()" class="px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold flex items-center gap-2 transition-all">
+            <span id="tts-icon">🔊</span> <span id="tts-label">Listen to Extract</span>
+          </button>
+          <div class="flex items-center gap-1.5 pl-2 border-l border-stone-200">
+            <span id="dot-0" class="w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-emerald-300"></span>
+            <span id="dot-1" class="w-3 h-3 rounded-full bg-stone-200"></span>
+            <span id="dot-2" class="w-3 h-3 rounded-full bg-stone-200"></span>
+            <span id="dot-3" class="w-3 h-3 rounded-full bg-stone-200"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Interactive Arena -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Text Extract Card -->
+        <div class="lg:col-span-6 bg-amber-50/50 p-6 rounded-2xl border border-amber-900/10 shadow-sm">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-amber-900/10">
+            <span class="text-xs font-bold uppercase tracking-wider text-stone-500">Document Dispatch</span>
+            <div class="flex items-center gap-2">
+              <span id="word-count" class="text-xs text-stone-500 font-mono">130 Words</span>
+              <button onclick="toggleFontSize()" title="Toggle text size" class="text-xs px-2 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-stone-700 font-mono">aA</button>
+            </div>
+          </div>
+          <div id="extract-body" class="serif-text text-lg leading-relaxed text-stone-800 whitespace-pre-line select-text">
+            <!-- Dynamic Extract Content -->
+          </div>
+        </div>
+
+        <!-- Right: Current Diagnostic Step -->
+        <div class="lg:col-span-6 space-y-4">
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+            
+            <div class="flex justify-between items-center pb-2 border-b border-stone-100">
+              <span id="skill-tag" class="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200/60 inline-flex items-center gap-1.5">
+                <span class="text-sm">🧭</span> Field Skill: Reading Between the Lines
+              </span>
+              <span id="step-indicator" class="text-xs font-semibold text-stone-400">Step 1 of 4</span>
+            </div>
+
+            <h3 id="question-prompt" class="text-base md:text-lg font-semibold text-stone-900 leading-snug">
+              Question text goes here?
+            </h3>
+
+            <!-- Dynamic Answer Area -->
+            <div id="answer-container" class="space-y-3 pt-2">
+              <!-- Choices or inputs dynamically injected -->
+            </div>
+
+            <!-- Hint Box -->
+            <div id="hint-box" class="hidden p-4 rounded-xl bg-amber-50/80 border border-amber-200 text-amber-950 text-sm leading-relaxed">
+              <div class="flex items-start gap-2">
+                <span class="text-base">💡</span>
+                <span id="hint-text">Hint text</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Action Controls -->
+          <div class="flex items-center justify-between pt-1">
+            <button id="hint-btn" onclick="revealHint()" class="text-xs font-semibold px-4 py-2.5 rounded-xl border border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100 transition-all flex items-center gap-1.5 shadow-sm">
+              <span>💡</span> Need a magnifying glass?
+            </button>
+
+            <button onclick="passQuestion()" class="text-xs font-medium text-stone-500 hover:text-stone-800 underline decoration-dotted underline-offset-4 px-2 py-1">
+              Log as Inconclusive / Pass
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCREEN 3: COMPLETION & REGULATION HUB -->
+    <section id="screen-exit" class="hidden max-w-2xl mx-auto text-center space-y-8">
+      
+      <div class="space-y-3">
+        <div class="w-16 h-16 bg-emerald-100 text-emerald-800 text-3xl rounded-full flex items-center justify-center mx-auto mb-2 border border-emerald-300">
+          ✓
+        </div>
+        <h2 class="text-3xl font-bold text-stone-900">Field Analysis Complete</h2>
+        <p class="text-stone-600 text-sm md:text-base leading-relaxed">
+          Your diagnostic snapshot has been logged. No numerical rank, zero pressure—just clear starting points to guide our studio writing workshops.
+        </p>
+      </div>
+
+      <!-- Mindful Regulation Bubble -->
+      <div class="p-8 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-4">
+        <span class="text-xs uppercase tracking-wider font-bold text-emerald-800">Mindful Reset • 60-Second Regulation</span>
+        <div class="w-24 h-24 rounded-full bg-emerald-100/70 border-2 border-emerald-300 mx-auto flex items-center justify-center breathing-circle">
+          <span class="text-xs font-bold text-emerald-900">Breathe</span>
+        </div>
+        <p class="text-xs text-stone-500 italic max-w-sm mx-auto">
+          Lower your shoulders, take a sip of water, and enjoy a slow breath before moving into your next lesson.
+        </p>
+      </div>
+
+      <!-- Google Classroom Submission Block -->
+      <div class="p-6 rounded-2xl bg-stone-900 text-white text-left space-y-4 shadow-xl">
+        <div class="flex justify-between items-center">
+          <span class="text-xs uppercase tracking-wider font-bold text-stone-400 font-mono">Dossier Clearance Summary</span>
+          <span id="copied-badge" class="hidden text-xs bg-emerald-600 text-white px-2.5 py-1 rounded font-semibold transition-all">Copied to Clipboard!</span>
+        </div>
+        <pre id="summary-output" class="text-xs mono-text text-stone-300 bg-stone-800/90 p-4 rounded-xl overflow-x-auto whitespace-pre-wrap leading-relaxed border border-stone-700"></pre>
+        <div class="flex gap-3">
+          <button onclick="copySummary()" class="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2">
+            <span>📋</span> Copy Clearance for Classroom
+          </button>
+          <button onclick="resetToChoice()" class="px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 font-semibold text-sm transition-all">
+            New Dossier
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-4xl mx-auto w-full text-center py-4 text-xs text-stone-400 border-t border-stone-200/60 mt-8">
+    Designed for the English Studio • Low Affective Filter Framework • KS3–KS4 Reading & Syntax Progression
+  </footer>
+
+  <script>
+    const dossiers = {
+      'A': {
+        genre: 'Digital Forensics // Cold Case',
+        title: 'The 02:14 AM Blackout Log',
+        wordCount: '118 Words',
+        extract: `[02:11:04] Central: Unit 4, confirm status. Substation 7 perimeter sensor tripped.\n\n[02:11:45] Mark: All green. Probably foxes in the relay gravel again. Weather is calm.\n\n[02:12:30] Central: We are registering erratic voltage drops across Grid B. Are yard cameras active?\n\n[02:13:02] Mark: Cameras fine. Just... a slight flicker on monitor three. Nothing to log. I’ll walk the fence shortly.\n\n[02:13:58] Mark: Disregard that. Central, did you dispatch a maintenance transport to Bay 3? Someone is cutting the secondary feeder cable.\n\n[02:14:15] Central: Negative, Unit 4. No scheduled transports. Evacuate the shack now.\n\n[02:14:22] Mark: The floodlights just died. They aren’t using vehicles.\n\n[CONNECTION TERMINATED]`,
+        steps: [
+          {
+            code: 'KS3.R.2.2.1',
+            skillLabel: 'Field Skill: Reading Between the Lines',
+            icon: '🧭',
+            prompt: 'Why did Mark initially tell Central that the sensor was "probably foxes"?',
+            type: 'choice',
+            choices: [
+              { text: 'He saw physical animal tracks in the yard gravel.', level: 'Developing' },
+              { text: 'He wants to believe it is harmless so he does not have to face an unknown threat in the dark.', level: 'Proficient' },
+              { text: 'Central\'s radar system is programmed to detect only wild animals.', level: 'Developing' },
+              { text: 'The security cameras verified a pack of foxes near the fence.', level: 'Developing' }
+            ],
+            hint: 'Notice Mark\'s hesitation before offering to walk the fence. Is he genuinely certain, or reassuring himself against his fear?'
+          },
+          {
+            code: 'KS3.R.2.2.2',
+            skillLabel: 'Field Skill: Pinpointing Evidence',
+            icon: '🎯',
+            prompt: 'Select the most surgical quotation where Mark realizes the intruders are on foot:',
+            type: 'choice',
+            choices: [
+              { text: '"The floodlights just died. They aren\'t using vehicles."', level: 'Approaching' },
+              { text: '"They aren\'t using vehicles."', level: 'Refining' },
+              { text: '"Disregard that. Central, did you dispatch a maintenance transport to Bay 3?"', level: 'Developing' }
+            ],
+            hint: 'A surgical quote isolates only the load-bearing words. Trim away surrounding details.'
+          },
+          {
+            code: 'KS3.R.2.1',
+            skillLabel: 'Field Skill: Decoding Words in Context',
+            icon: '🔍',
+            prompt: 'Central registers "erratic voltage drops." In this context, erratic means:',
+            type: 'choice',
+            choices: [
+              { text: 'Sudden, uneven, and unpredictable', level: 'Proficient' },
+              { text: 'Completely shut down permanently', level: 'Developing' },
+              { text: 'Gradual, steady, and planned', level: 'Developing' },
+              { text: 'Harmless and negligible', level: 'Developing' }
+            ],
+            hint: 'Think about how lights pulse inconsistently right before a catastrophic blackout.'
+          },
+          {
+            code: 'KS3.W.1',
+            skillLabel: 'Field Skill: Tone & Sentence Craft',
+            icon: '✍️',
+            prompt: 'Rewrite Mark\'s line ("Cameras fine. Just... a slight flicker.") into one sentence that makes him sound visibly anxious.',
+            type: 'text',
+            scaffold: 'Try starting with: "Although the monitor screens look still..."',
+            hint: 'Use a subordinating conjunction (e.g., Although, Despite, While, As) to balance outward calm with internal panic.'
+          }
+        ]
+      },
+      'B': {
+        genre: 'Sci-Fi Survival // Audio Intercept',
+        title: 'Sector 4 Signal Intercept',
+        wordCount: '109 Words',
+        extract: `[AUDIO LOG // SCOUT-07 // CYCLE 412]\n\n"I have reached the floor of the fissure. My thermal gauge registers the bedrock at minus twenty, yet the rock walls are pulsing with a faint, steady heat. It feels rhythmic, like an enormous lung.\n\nI have killed the primary floodlight. In total darkness, the frost along the ceiling glows with pale, bioluminescent veins. It is stunning, really. Completely inert.\n\nWait. The ice dust on my visor is not settling; it is drifting horizontally toward the cavern chimney. The barometric pressure here isn't dropping—it is being pulled inward. Whatever carved this hollow is inhaling."`,
+        steps: [
+          {
+            code: 'KS3.R.2.2.1',
+            skillLabel: 'Field Skill: Reading Between the Lines',
+            icon: '🧭',
+            prompt: 'Why did Scout-07 switch off their primary floodlight?',
+            type: 'choice',
+            choices: [
+              { text: 'The battery power pack failed in the extreme cold.', level: 'Developing' },
+              { text: 'To observe if the pale veins in the frost produced their own natural luminescence.', level: 'Proficient' },
+              { text: 'To hide from hostile subterranean organisms.', level: 'Developing' },
+              { text: 'The thermal sensor required total circuit isolation.', level: 'Developing' }
+            ],
+            hint: 'Review what Scout-07 observes immediately once the cave is plunged into darkness.'
+          },
+          {
+            code: 'KS3.R.2.2.2',
+            skillLabel: 'Field Skill: Pinpointing Evidence',
+            icon: '🎯',
+            prompt: 'Select the exact phrase where the scout compares the cavern rock to a living organism:',
+            type: 'choice',
+            choices: [
+              { text: '"pulsing with a faint, steady heat. It feels rhythmic, like an enormous lung."', level: 'Approaching' },
+              { text: '"like an enormous lung"', level: 'Refining' },
+              { text: '"rock walls are pulsing"', level: 'Approaching' }
+            ],
+            hint: 'Choose the tightest figurative simile that names the bodily organ.'
+          },
+          {
+            code: 'KS3.R.2.1',
+            skillLabel: 'Field Skill: Decoding Words in Context',
+            icon: '🔍',
+            prompt: 'The scout describes the glowing veins as "completely inert." This means they are:',
+            type: 'choice',
+            choices: [
+              { text: 'Stationary, harmless, and not chemically reacting', level: 'Proficient' },
+              { text: 'Blindingly bright and dangerous', level: 'Developing' },
+              { text: 'Lethal and radiating immense heat', level: 'Developing' },
+              { text: 'Creeping rapidly across the roof', level: 'Developing' }
+            ],
+            hint: 'An inert material shows zero active movement or hostile volatility.'
+          },
+          {
+            code: 'KS3.W.1',
+            skillLabel: 'Field Skill: Tone & Sentence Craft',
+            icon: '✍️',
+            prompt: 'Look at the final sentence ("Whatever carved this hollow is inhaling."). Rewrite it using a fronted adverbial (telling when, where, or how) to amplify the suspense.',
+            type: 'text',
+            scaffold: 'Try starting with: "In the suffocating dark..." or "With a slow, chilling pull..."',
+            hint: 'Placing a descriptive adverbial phrase at the start hooks the reader with atmosphere.'
+          }
+        ]
+      },
+      'C': {
+        genre: 'Historical Noir // Vault 9',
+        title: 'Vault 9: The Steamer Diary',
+        wordCount: '124 Words',
+        extract: `October 14th, 1912 — Aboard the S.S. Coromandel\n\n"The purser assures me our stateroom is among the most tranquil on the promenade deck, yet sleep eludes me. Mr. Vance sat opposite me at supper, smiling with that polished, intolerable courtesy of his. He inquired three times whether my mahogany trunk was secured with the brass padlock he so generously provided in Southampton.\n\nI offered my most cheerful nod, though my pulse hammered against my ribs. He believes the heavy iron casket remains bolted within the cedar lining, exactly as he arranged.\n\nHe does not suspect that two hours past midnight, while the corridor was abandoned, I dropped the only key through a scupper into the Atlantic blackness. Let him try to open it now."`,
+        steps: [
+          {
+            code: 'KS3.R.2.2.1',
+            skillLabel: 'Field Skill: Reading Between the Lines',
+            icon: '🧭',
+            prompt: 'Why does Mr. Vance ask three separate times about the brass padlock at supper?',
+            type: 'choice',
+            choices: [
+              { text: 'He is making polite, forgetful dining conversation.', level: 'Developing' },
+              { text: 'He is anxious to ensure the secret trunk cannot be tampered with or opened.', level: 'Proficient' },
+              { text: 'He forgot where he purchased the brass padlock.', level: 'Developing' },
+              { text: 'He already suspects the narrator disposed of the key.', level: 'Developing' }
+            ],
+            hint: 'Consider why someone repeatedly asks about a security measure they personally insisted on.'
+          },
+          {
+            code: 'KS3.R.2.2.2',
+            skillLabel: 'Field Skill: Pinpointing Evidence',
+            icon: '🎯',
+            prompt: 'Which quotation isolates the physical evidence that the narrator is terrified despite their calm smile?',
+            type: 'choice',
+            choices: [
+              { text: '"I offered my most cheerful nod, though my pulse hammered against my ribs."', level: 'Approaching' },
+              { text: '"pulse hammered against my ribs"', level: 'Refining' },
+              { text: '"smiling with that polished, intolerable courtesy"', level: 'Developing' }
+            ],
+            hint: 'Isolate strictly the internal physiological reaction demonstrating panic.'
+          },
+          {
+            code: 'KS3.R.2.1',
+            skillLabel: 'Field Skill: Decoding Words in Context',
+            icon: '🔍',
+            prompt: 'The narrator writes that "sleep eludes me." In this sentence, eludes means:',
+            type: 'choice',
+            choices: [
+              { text: 'Escapes or remains out of reach', level: 'Proficient' },
+              { text: 'Horrifies and disturbs', level: 'Developing' },
+              { text: 'Arrives promptly and peacefully', level: 'Developing' },
+              { text: 'Shakes with physical vibration', level: 'Developing' }
+            ],
+            hint: 'When a feeling or goal eludes you, you pursue it but cannot capture it.'
+          },
+          {
+            code: 'KS3.W.1',
+            skillLabel: 'Field Skill: Tone & Sentence Craft',
+            icon: '✍️',
+            prompt: 'Look at the final line ("Let him try to open it now."). Add a contrasting clause beginning with "Although..." to reveal the narrator knows danger is still present.',
+            type: 'text',
+            scaffold: 'Try starting with: "Although the key is lost in the icy depths..."',
+            hint: 'A contrasting clause highlights that losing the key doesn\'t make them entirely safe.'
+          }
+        ]
+      }
+    };
+
+    let currentDossierKey = 'A';
+    let currentStep = 0;
+    let learnerTags = {};
+    let inactivityTimer;
+    let isLargeText = false;
+
+    function selectDossier(key) {
+      stopSpeech();
+      currentDossierKey = key;
+      currentStep = 0;
+      learnerTags = {
+        dossier: dossiers[key].title,
+        'KS3.R.2.2.1': 'Not assessed',
+        'KS3.R.2.2.2': 'Not assessed',
+        'KS3.R.2.1': 'Not assessed',
+        'KS3.W.1': 'Not assessed'
+      };
+
+      document.getElementById('screen-choice').classList.add('hidden');
+      document.getElementById('screen-workspace').classList.remove('hidden');
+      document.getElementById('reset-btn').classList.remove('hidden');
+
+      const badge = document.getElementById('status-badge');
+      badge.innerText = 'Phase 2: Investigation';
+      badge.className = 'text-xs font-semibold px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200';
+
+      const data = dossiers[key];
+      document.getElementById('active-genre').innerText = data.genre;
+      document.getElementById('active-title').innerText = data.title;
+      document.getElementById('word-count').innerText = data.wordCount;
+      document.getElementById('extract-body').innerText = data.extract;
+
+      renderStep();
+    }
+
+    function resetToChoice() {
+      stopSpeech();
+      clearTimeout(inactivityTimer);
+      document.getElementById('screen-workspace').classList.add('hidden');
+      document.getElementById('screen-exit').classList.add('hidden');
+      document.getElementById('reset-btn').classList.add('hidden');
+      document.getElementById('screen-choice').classList.remove('hidden');
+
+      const badge = document.getElementById('status-badge');
+      badge.innerText = 'Phase 1: Dossier Choice';
+      badge.className = 'text-xs font-semibold px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200';
+    }
+
+    function renderStep() {
+      resetInactivityWatcher();
+      const data = dossiers[currentDossierKey];
+      const step = data.steps[currentStep];
+
+      for (let i = 0; i < 4; i++) {
+        const dot = document.getElementById(`dot-${i}`);
+        if (i < currentStep) {
+          dot.className = 'w-3 h-3 rounded-full bg-emerald-600';
+        } else if (i === currentStep) {
+          dot.className = 'w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-emerald-300';
+        } else {
+          dot.className = 'w-3 h-3 rounded-full bg-stone-200';
+        }
+      }
+
+      document.getElementById('step-indicator').innerText = `Step ${currentStep + 1} of 4`;
+      
+      // Student-friendly badge display
+      const skillEl = document.getElementById('skill-tag');
+      skillEl.innerHTML = `<span class="text-sm">${step.icon}</span> ${step.skillLabel}`;
+
+      document.getElementById('question-prompt').innerText = step.prompt;
+
+      const container = document.getElementById('answer-container');
+      container.innerHTML = '';
+      document.getElementById('hint-box').classList.add('hidden');
+      document.getElementById('hint-text').innerText = step.hint;
+      document.getElementById('hint-btn').classList.remove('pulse-hint');
+
+      if (step.type === 'choice') {
+        step.choices.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.className = 'w-full text-left p-3.5 rounded-xl border border-stone-200 hover:border-emerald-600 hover:bg-emerald-50/60 text-stone-800 text-sm font-medium transition-all focus:outline-none focus:ring-1 focus:ring-emerald-500';
+          btn.innerText = ch.text;
+          btn.onclick = () => submitAnswer(step.code, ch.level);
+          container.appendChild(btn);
+        });
+      } else {
+        const wrap = document.createElement('div');
+        wrap.className = 'space-y-3';
+        wrap.innerHTML = `
+          <textarea id="written-input" rows="3" class="w-full p-3.5 rounded-xl border border-stone-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 text-sm text-stone-800 focus:outline-none" placeholder="Type your sentence response here..."></textarea>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <span class="text-xs text-stone-500 italic">${step.scaffold}</span>
+            <button onclick="submitWritten('${step.code}')" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold self-end sm:self-auto transition-colors">Confirm Entry →</button>
+          </div>
+        `;
+        container.appendChild(wrap);
+      }
+    }
+
+    function submitAnswer(skillCode, level) {
+      learnerTags[skillCode] = level;
+      advanceNext();
+    }
+
+    function submitWritten(skillCode) {
+      const input = document.getElementById('written-input');
+      const val = input ? input.value.trim() : '';
+      
+      const complexSyntaxRegex = /\b(although|even though|though|while|despite|in spite of|whereas|unless|before|as long as|since)\b/i;
+
+      if (!val) {
+        learnerTags[skillCode] = 'Approaching (Scaffold provided / Skipped Entry)';
+      } else if (complexSyntaxRegex.test(val) || val.includes(';')) {
+        learnerTags[skillCode] = 'Proficient / Refining (Subordinated Syntax Established)';
+      } else {
+        learnerTags[skillCode] = 'Approaching (Compound or Simple Sentence Formed)';
+      }
+      advanceNext();
+    }
+
+    function passQuestion() {
+      const currentCode = dossiers[currentDossierKey].steps[currentStep].code;
+      learnerTags[currentCode] = 'Developing (Exploration Inconclusive / Support Opt-in)';
+      advanceNext();
+    }
+
+    function advanceNext() {
+      if (currentStep < 3) {
+        currentStep++;
+        renderStep();
+      } else {
+        showExitScreen();
+      }
+    }
+
+    function revealHint() {
+      document.getElementById('hint-box').classList.remove('hidden');
+      document.getElementById('hint-btn').classList.remove('pulse-hint');
+    }
+
+    function resetInactivityWatcher() {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        const hintBtn = document.getElementById('hint-btn');
+        if (hintBtn) hintBtn.classList.add('pulse-hint');
+      }, 40000);
+    }
+
+    function toggleFontSize() {
+      const extractEl = document.getElementById('extract-body');
+      isLargeText = !isLargeText;
+      if (isLargeText) {
+        extractEl.classList.remove('text-lg');
+        extractEl.classList.add('text-xl');
+      } else {
+        extractEl.classList.remove('text-xl');
+        extractEl.classList.add('text-lg');
+      }
+    }
+
+    function stopSpeech() {
+      const synth = window.speechSynthesis;
+      if (synth && synth.speaking) {
+        synth.cancel();
+      }
+      const label = document.getElementById('tts-label');
+      const icon = document.getElementById('tts-icon');
+      if (label) label.innerText = 'Listen to Extract';
+      if (icon) icon.innerText = '🔊';
+    }
+
+    function toggleSpeech() {
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+
+      if (synth.speaking) {
+        stopSpeech();
+        return;
+      }
+
+      const text = dossiers[currentDossierKey].extract;
+      const cleanText = text.replace(/\[.*?\]/g, '');
+      const utter = new SpeechSynthesisUtterance(cleanText);
+      utter.rate = 0.88;
+      utter.pitch = 1.0;
+
+      utter.onend = () => {
+        stopSpeech();
+      };
+
+      utter.onerror = () => {
+        stopSpeech();
+      };
+
+      synth.speak(utter);
+      document.getElementById('tts-label').innerText = 'Pause Reading';
+      document.getElementById('tts-icon').innerText = '⏸️';
+    }
+
+    function showExitScreen() {
+      stopSpeech();
+      clearTimeout(inactivityTimer);
+
+      document.getElementById('screen-workspace').classList.add('hidden');
+      document.getElementById('screen-exit').classList.remove('hidden');
+
+      const badge = document.getElementById('status-badge');
+      badge.innerText = 'Phase 3: Completed';
+      badge.className = 'text-xs font-semibold px-3.5 py-1.5 rounded-full bg-stone-100 text-stone-700 border border-stone-300';
+
+      const summaryText = `[STUDIO DOSSIER TRANSMISSION]
+Dossier Selected: ${learnerTags.dossier}
+Status: Completed with Low Affective Clearance
+
+SKILL RADAR SNAPSHOT:
+• KS3.R.2.2.1 (Implicit Extraction) : ${learnerTags['KS3.R.2.2.1']}
+• KS3.R.2.2.2 (Evidence Trimming)   : ${learnerTags['KS3.R.2.2.2']}
+• KS3.R.2.1   (Vocabulary in Context): ${learnerTags['KS3.R.2.1']}
+• KS3.W.1     (Sentence Craft)       : ${learnerTags['KS3.W.1']}
+
+REFLECTIVE NOTE:
+Learner explored all 4 dispatch checkpoints independently without numerical gating.`;
+
+      document.getElementById('summary-output').innerText = summaryText;
+    }
+
+    function copySummary() {
+      const txt = document.getElementById('summary-output').innerText;
+      navigator.clipboard.writeText(txt).then(() => {
+        const b = document.getElementById('copied-badge');
+        b.classList.remove('hidden');
+        setTimeout(() => b.classList.add('hidden'), 3000);
+      });
+    }
+
+    window.addEventListener('beforeunload', () => {
+      stopSpeech();
+    });
+  </script>
+</body>
+</html>
